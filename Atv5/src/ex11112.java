@@ -58,6 +58,7 @@ public class ex11112 {
 				case 5:{
 					System.out.printf("Você optou por sair.");
 					System.out.println();
+				break;
 				}
 				
 				default: {
