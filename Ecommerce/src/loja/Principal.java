@@ -21,7 +21,6 @@ public class Principal {
 		pula();
 		linhaCima();
 		pula();
-		
 		System.out.println("           BRILHO ETERNO           ");
 		System.out.println(" Ressalte também sua luz exterior  ");
 		linhaBaixo();
@@ -29,12 +28,19 @@ public class Principal {
 		do {
 			pula();
 			pula();
+			linhaSimplesCurta();
+			pula();
+			System.out.println("          MENU PRINCIPAL       ");
+			linhaSimplesCurta();
+			pula();
 			System.out.println("[1] - COMPRAR PRODUTO");
 			System.out.println("[2] - GERENCIAR ESTOQUE");
 			System.out.println("[3] - SAIR");
 			pula();
 			System.out.print("Digite sua opcao: ");
 			opcaoMenu = scan.next().charAt(0);
+			linhaSimplesCurta();
+			pula();
 			
 			
 			switch(opcaoMenu) {
@@ -44,15 +50,23 @@ public class Principal {
 					do {
 						pula();
 						pula();
+						linhaSimplesCurta();
+						pula();
+						System.out.println("          ÁREA DO CLIENTE");
+						linhaSimplesCurta();
+						pula();
 						System.out.println("[1] - CADASTRO");
 						System.out.println("[2] - ADICIONAR PRODUTO AO CARRINHO");
 						System.out.println("[3] - EXIBIR CARRINHO");
 						System.out.println("[4] - REMOVER PRODUTO DO CARRINHO");
 						System.out.println("[5] - COMPRAR");
-						System.out.println("[6] - VOLTAR AO MENU PRINCIPAL");
+						System.out.println("[6] - EXIBIR PERFIL CLIENTE");
+						System.out.println("[7] - VOLTAR AO MENU PRINCIPAL");
 						pula();
 						System.out.print("Digite sua opcao: ");
-						opcaoSUBmenu = scan.next().charAt(0);
+						opcaoSUBmenu = scan.next().charAt(0);linhaSimplesCurta();
+						pula();
+			
 						
 						switch(opcaoSUBmenu) {
 						
@@ -96,19 +110,25 @@ public class Principal {
 								for (Produto joia : joias){
 									System.out.printf("%s\t\t%.2f\t\t%d\t\t%s\n",joia.getCodigo(), joia.getPrecoUnitario(), joia.getQtdeCarrinho(), joia.getNomeProduto());
 								}
+								
+								linhaSimples();
+								pula();
 							break;
 								
 							case '4':
-								linhaSimples();
+								linhaSimplesCurta();
+								pula();
+								System.out.println("        REMOÇÃO DE ITENS");
+								linhaSimplesCurta();
 								pula();
 								System.out.println("[1] - REMOVER ITEM");
 								System.out.println("[2] - LIMPAR CARRINHO");
 								System.out.println("[3] - VOLTAR");
 								pula();
-								linhaSimples();
-								System.out.print("\nDigite sua opcao: ");
+								System.out.print("Digite sua opcao: ");
 								opcaoCarrinho = scan.next().charAt(0);
-								
+								linhaSimplesCurta();
+								pula();
 								if(opcaoCarrinho == '1') {
 									linhaSimples();
 									pula();
@@ -120,6 +140,9 @@ public class Principal {
 										System.out.printf("%s\t\t%.2f\t\t%d\t\t%s\n",joia.getCodigo(), joia.getPrecoUnitario(), joia.getQtdeCarrinho(), joia.getNomeProduto());
 									}
 									
+									linhaSimples();
+									pula();
+									
 									System.out.println("Digite o código do produto a remover: ");
 									codigoNumerico = converteCodigoProduto(scan.next().toUpperCase());
 									
@@ -128,61 +151,100 @@ public class Principal {
 								}
 								else if(opcaoCarrinho == '2') {
 									limparCarrinho(joias);
+									System.out.println("Você limpou o Carrinho!");
 								}
 								
 							break;
 							
 							case '5':
-								for (Produto joia : joias){
-									totalPreco += joia.venda();
+								if(cadastro == 1) {
+									for (Produto joia : joias){
+										totalPreco += joia.venda();
+									}
+									
+									linhaSimplesCurta();
+									pula();
+									System.out.println("        FORMAS DE PAGAMENTO");
+									linhaSimplesCurta();
+									pula();
+									System.out.printf("[1] - A VISTA = R$ %.2f + R$ %.2f de impostos\n", (totalPreco - (totalPreco * 0.1)), ((totalPreco - (totalPreco * 0.1)) * 0.09));
+									System.out.printf("[2] - DÉBITO = R$ %.2f + R$ %.2f de impostos\n", totalPreco, (totalPreco * 0.09));
+									System.out.printf("[3] - CRÉDITO = R$ %.2f + R$ %.2f de impostos\n", totalPreco + (totalPreco * 0.05), ((totalPreco + (totalPreco * 0.05)) * 0.09));
+									System.out.printf("[4] - 3X COM JUROS = R$ %.2f + R$ %.2f de impostos\n" , totalPreco + (totalPreco * 0.1), ((totalPreco + (totalPreco * 0.1)) * 0.09));
+									System.out.println("[5] - VOLTAR");
+									pula();
+									System.out.print("Digite sua opcao: ");
+									opcaoPagamento = scan.next().charAt(0);
+									pula();
+									linhaSimplesCurta();
+									pula();
+									
+									
+									pula();
+									pula();
+									linhaCima();
+									pula();
+									System.out.print("            NOTA FISCAL");
+									pula();
+									linhaBaixo();
+									pula();
+									pula();
+									
+									if(opcaoPagamento == '1') {
+										System.out.printf("COMPRA REALIZADA A VISTA = R$ %.2f + R$ %.2f de impostos\n", (totalPreco - (totalPreco * 0.1)), ((totalPreco - (totalPreco * 0.1)) * 0.09));
+										retiraItensEstoque(joias);
+										limparCarrinho(joias);
+										totalPreco = 0;
+									}
+									else if(opcaoPagamento == '2') {
+										System.out.printf("COMPRA REALIZADA NO DÉBITO = R$ %.2f + R$ %.2f de impostos\n", totalPreco, (totalPreco * 0.09));
+										retiraItensEstoque(joias);
+										limparCarrinho(joias);
+										totalPreco = 0;
+									}
+									else if(opcaoPagamento == '3') {
+										System.out.printf("COMPRA REALIZADA NO CRÉDITO = R$ %.2f + R$ %.2f de impostos\n", totalPreco + (totalPreco * 0.05), ((totalPreco + (totalPreco * 0.05)) * 0.09));
+										retiraItensEstoque(joias);
+										limparCarrinho(joias);
+										totalPreco = 0;
+									}
+									else if(opcaoPagamento == '4') {
+										System.out.printf("COMPRA REALIZADA EM 3X COM JUROS = R$ %.2f + R$ %.2f de impostos\n" , totalPreco + (totalPreco * 0.1), ((totalPreco + (totalPreco * 0.1)) * 0.09));
+										retiraItensEstoque(joias);
+										limparCarrinho(joias);
+										totalPreco = 0;
+									}
+									
+									linhaSimples();
+									pula();
 								}
-								
-								linhaSimples();
-								pula();
-								System.out.println("Escolha a forma de pagamento: ");
-								System.out.printf("[1] - A VISTA = R$ %.2f + R$ %.2f de impostos\n", (totalPreco - (totalPreco * 0.1)), ((totalPreco - (totalPreco * 0.1)) * 0.09));
-								System.out.printf("[2] - DÉBITO = R$ %.2f + R$ %.2f de impostos\\n", totalPreco, (totalPreco * 0.09));
-								System.out.printf("[3] - CRÉDITO = R$ %.2f + R$ %.2f de impostos\\n", totalPreco + (totalPreco * 0.05), ((totalPreco + (totalPreco * 0.05)) * 0.09));
-								System.out.printf("[4] - 3X COM JUROS = R$ %.2f + R$ %.2f de impostos\\n" , totalPreco + (totalPreco * 0.1), ((totalPreco + (totalPreco * 0.1)) * 0.09));
-								System.out.println("[5] - VOLTAR");
-								pula();
-								System.out.print("\nDigite sua opcao: ");
-								linhaSimples();
-								pula();
-								opcaoPagamento = scan.next().charAt(0);
-								
-								pula();
-								linhaSimples();
-								System.out.print("NOTA FISCAL");
-								pula();
-								linhaSimples();
-								
-								if(opcaoPagamento == '1') {
-									System.out.printf("COMPRA REALIZADA A VISTA = R$ %.2f + R$ %.2f de impostos\n", (totalPreco - (totalPreco * 0.1)), ((totalPreco - (totalPreco * 0.1)) * 0.09));
-									retiraItensEstoque(joias);
-									limparCarrinho(joias);
+								else {
+									System.out.println("Realize o cadastro para efetuar a compra");
 								}
-								else if(opcaoPagamento == '2') {
-									System.out.printf("COMPRA REALIZADA NO DÉBITO = R$ %.2f + R$ %.2f de impostos\\n", totalPreco, (totalPreco * 0.09));
-									retiraItensEstoque(joias);
-									limparCarrinho(joias);
-								}
-								else if(opcaoPagamento == '3') {
-									System.out.printf("COMPRA REALIZADA NO CRÉDITO = R$ %.2f + R$ %.2f de impostos\\n", totalPreco + (totalPreco * 0.05), ((totalPreco + (totalPreco * 0.05)) * 0.09));
-									retiraItensEstoque(joias);
-									limparCarrinho(joias);
-								}
-								else if(opcaoPagamento == '4') {
-									System.out.printf("COMPRA REALIZADA EM 3X COM JUROS = R$ %.2f + R$ %.2f de impostos\\n" , totalPreco + (totalPreco * 0.1), ((totalPreco + (totalPreco * 0.1)) * 0.09));
-									retiraItensEstoque(joias);
-									limparCarrinho(joias);
-								}
-								
-								linhaSimples();
-								
 							break;
 								
 							case '6':
+								if (cadastro == 1) {
+									linhaSimplesCurta();
+									pula();
+									System.out.println("           PERFIL CLIENTE");
+									linhaSimplesCurta();
+									pula();
+									System.out.println("NOME: " + clienteAtual.getNome());
+									System.out.println("GÊNERO: " + clienteAtual.getGenero());
+									System.out.println("NÚMERO DE CPF: " + clienteAtual.getCpf());
+									System.out.println("ANO DE NASCIMENTO: " + clienteAtual.getAnoNascimento());
+									System.out.println("IDADE: " + clienteAtual.voltaIdade());
+									pula();
+									linhaSimplesCurta();
+									pula();
+									
+								} else {
+									System.out.println("Realize o cadastro para visualizar perfil");
+								}
+							break;
+							
+							case '7':
 								System.out.println("Voltando...");
 							break;
 							
@@ -197,19 +259,22 @@ public class Principal {
 				
 				case '2':
 					do {
-						linhaSimples();
 						pula();
-						System.out.println("Gerenciamento de Estoque:");
+						linhaSimplesCurta();
+						pula();
+						System.out.println("    GERENCIAMENTO DE ESTOQUE");
+						linhaSimplesCurta();
+						pula();
 						System.out.println("[1] - ADICIONAR AO ESTOQUE");
 						System.out.println("[2] - REMOVER ESTOQUE");
 						System.out.println("[3] - EXIBIR ESTOQUE");
 						System.out.println("[4] - VOLTAR AO MENU PRINCIPAL");
 						pula();
-						System.out.print("\nDigite sua opcao: ");
-						linhaSimples();
-						pula();
+						System.out.print("Digite sua opcao: ");
 						opcaoGerenciaEstoque = scan.next().charAt(0);
-						
+						linhaSimplesCurta();
+						pula();
+	
 						switch(opcaoGerenciaEstoque) {
 						
 						case '1':
@@ -286,6 +351,12 @@ public class Principal {
 	
 	public static void linhaSimples() {
 		for(int i = 1; i <= 75; i++) {
+			System.out.print("-");
+		}
+	}
+	
+	public static void linhaSimplesCurta() {
+		for(int i = 1; i <= 35; i++) {
 			System.out.print("-");
 		}
 	}
